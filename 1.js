@@ -16,4 +16,3 @@ let appData = {
 appData.expenses[answ1] = answ2;
 appData.expenses[answ3] = answ4;
 alert( appData.budget / 30);
-console.log (appData);
