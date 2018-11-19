@@ -18,7 +18,6 @@ function start() {
     appData.timeData = time;
 }
 
-
 function chooseExpenses() {
     for (let i = 0; i < 2; i++) {
         let a = prompt('Введите обязательную статью расходов в этом месяце', ''),
@@ -34,13 +33,12 @@ function chooseExpenses() {
     }
 };
 
-function main() {
-    start();
-    chooseExpenses();
-
+function detectDayBudget() {
     appData.moneyPerDay = (appData.budget / 30).toFixed();
-
     alert("Ежедневный бюджет: " + appData.moneyPerDay);
+};
+
+function detectLevel() {
     if (appData.moneyPerDay < 100) {
         console.log("Минимальный уровень достатка");
     } else if (appData.moneyPerDay < 2000) {
@@ -50,6 +48,20 @@ function main() {
     } else {
         console.log("Произошла ошибка");
     }
+};
+
+function chooseOptExpenses() {
+    for (let i = 1; i < 4; i++) {
+        let a = prompt('Статья необязательных расходов?', '');
+        appData.optionalExpenses[i]=a;
+    }
+};
+
+function main() {
+    start();
+    chooseExpenses();
+    detectDayBudget();
+    detectLevel();
     checkSavings();
 };
 
