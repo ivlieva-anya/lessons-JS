@@ -121,6 +121,7 @@ window.addEventListener('DOMContentLoaded', function () {
         statusMessange = document.createElement('div');
 
     statusMessange.classList.add('status');
+
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         form.appendChild(statusMessange);
@@ -151,6 +152,17 @@ window.addEventListener('DOMContentLoaded', function () {
         for (let i = 0; i < input.length; i++) {
             input[i].value = '';
 
+        }
+    });
+
+    input[0].addEventListener('input', function(event){
+        let str = '0123456789+-)(';
+        if(str.indexOf(event.data,0) === -1 || input[0].value.length>16){
+            input[0].value.length>16 ? statusMessange.textContent='Длинна номера не более 16 симв.': statusMessange.textContent='Можно вводить только цифры и символы +- ( )';
+            input[0].value = input[0].value.substr(0,input[0].value.length-1);
+            form.appendChild(statusMessange);
+        } else{
+            statusMessange.textContent='';
         }
     });
 });
