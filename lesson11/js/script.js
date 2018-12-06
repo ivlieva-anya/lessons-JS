@@ -74,7 +74,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 hours.textContent = '00';
                 minutes.textContent = '00';
                 seconds.textContent = '00';
-
             }
         }
         updateClock();
@@ -91,14 +90,12 @@ window.addEventListener('DOMContentLoaded', function () {
         overlay.style.display = 'block';
         this.classList.add('more-splash');
         document.body.style.overflow = 'hidden';
-
     });
 
     close.addEventListener('click', () => {
         overlay.style.display = 'none';
         more.classList.remove('more-splash');
         document.body.style.overflow = '';
-
     });
     rip.forEach((item) => {
         item.addEventListener('click',function () {
@@ -106,7 +103,6 @@ window.addEventListener('DOMContentLoaded', function () {
             this.classList.add('more-splash');
             close.classList.remove('more-splash');
             document.body.style.overflow = 'hidden';
-
         });
     });
     //form
@@ -146,12 +142,10 @@ window.addEventListener('DOMContentLoaded', function () {
                 statusMessange.innerHTML = messange.success;
             } else {
                 statusMessange.innerHTML = messange.failur;
-
             }
         });
         for (let i = 0; i < input.length; i++) {
             input[i].value = '';
-
         }
     });
 
