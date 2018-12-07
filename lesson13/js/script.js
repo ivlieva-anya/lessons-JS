@@ -165,14 +165,108 @@ window.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-        
+
             let formData = new FormData(form);
             postData(formData)
                 .then(() => statusMessange.innerHTML = messange.success)
                 .catch(() => statusMessange.innerHTML = messange.failur)
-                .then(()=>clearInput());
+                .then(() => clearInput());
         });
     }
+    sendForm(form);
     //Slider
-    let slideIndex=0
+    let slideIndex = 1,
+        slides = document.querySelectorAll('.slider-item'),
+        next = document.querySelector('.next'),
+        prev = document.querySelector('.prev'),
+        dotsWrap = document.querySelector('.slider-dots'),
+        dots = document.querySelectorAll('.dot');
+    showSlides(slideIndex);
+
+    function showSlides(n) {
+        if (n > slides.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+
+        slides.forEach(item => item.style.display = 'none');
+        dots.forEach(item => item.classList.remove('dot-active'));
+        slides[slideIndex - 1].style.display = 'block';
+        dots[slideIndex - 1].classList.add('dot-active');
+    }
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+    prev.addEventListener('click', function () {
+        plusSlides(-1);
+    });
+    next.addEventListener('click', function () {
+        plusSlides(1);
+    });
+    dotsWrap.addEventListener('click', function (event) {
+        for (let i = 0; i < dots.length + 1; i++) {
+            if (event.target.classList.contains('dot') && event.target == dots[i - 1]) {
+                currentSlide(i);
+            }
+        }
+    });
+    //Calc
+    let persons = document.querySelectorAll('.counter-block-input')[0],
+        restDays = document.querySelectorAll('.counter-block-input')[1],
+        place = document.getElementById('select'),
+        totalValue = document.getElementById('total'),
+        personSum = 0,
+        daySum = 0,
+        total = 0;
+    totalValue.innerHTML = 0;
+
+    function mm() {
+        persons[0].addEventListener('input', function (e) {
+            console.log(persons[0].value);
+            let num = '.+e';
+            if (num.indexOf(e.data, 0) === -1) {
+                persons.value = persons[0].value.substr(0, persons[0].value.length - 1);
+            }
+        });
+    }
+    mm();
+
+    persons.addEventListener('change', function () {
+
+        personSum = +this.value;
+        total = (daySum + personSum) * 4000;
+        if (restDays.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            totalValue.innerHTML = total;
+        }
+    });
+
+    restDays.addEventListener('change', function () {
+        daySum = +this.value;
+        total = (daySum + personSum) * 4000;
+        if (persons.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            totalValue.innerHTML = total;
+        }
+    });
+
+
+    place.addEventListener('change', function () {
+        if (restDays.value == '' || persons.value == '') {
+            totalValue.innerHTML = 0;
+        } else {
+            let a = total;
+            totalValue.innerHTML = a * this.options[this.selectedIndex].value;
+        }
+    });
+
 });
