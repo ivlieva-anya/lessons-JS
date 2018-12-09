@@ -1,8 +1,4 @@
-window.addEventListener('DOMContentLoaded', function () {
-
-    'use strict';
-    
-});    
+ 'use strict';   
 import {calc} from './calc';
 import {Form} from './form';
 import {tabs} from './tabs';
