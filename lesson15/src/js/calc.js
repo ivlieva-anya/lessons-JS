@@ -18,7 +18,7 @@ export function calc() {
         personsAll.forEach((pers) => {
             pers.addEventListener('input', function (e) {
                 console.log(pers.value);
-                let num = '123456789';
+                let num = '1234567890';
                 if (num.indexOf(e.data, 0) < 0) {
                     pers.value = pers.value.substr(0, pers.value.length - 1);
                 }
