@@ -9,6 +9,7 @@ export function calc() {
         personsAll = document.querySelectorAll('.counter-block-input'),
         place = document.getElementById('select'),
         totalValue = document.getElementById('total'),
+        calcmumbai = document.querySelector('#select'),
         personSum = 0,
         daySum = 0,
         total = 0;
@@ -17,8 +18,7 @@ export function calc() {
     function mm() {
         personsAll.forEach((pers) => {
             pers.addEventListener('input', function (e) {
-                console.log(pers.value);
-                let num = '123456789';
+                let num = '1234567890';
                 if (num.indexOf(e.data, 0) < 0) {
                     pers.value = pers.value.substr(0, pers.value.length - 1);
                 }
@@ -27,10 +27,13 @@ export function calc() {
     }
     mm();
 
+    
+
     persons.addEventListener('change', function () {
 
         personSum = +this.value;
-        total = daySum * personSum * 4000;
+        total = daySum * personSum * 4000 * calcmumbai.options[calcmumbai.selectedIndex].value;
+
         if (restDays.value == '') {
             totalValue.innerHTML = 0;
         } else {
@@ -39,7 +42,6 @@ export function calc() {
     });
 
     restDays.addEventListener('change', function (e) {
-        console.dir(e.currentTarget.value);
         daySum = +this.value;
         total = daySum * personSum * 4000;
         if (persons.value == '' && this.value != '') {
@@ -47,10 +49,11 @@ export function calc() {
         } else {
             totalValue.innerHTML = total;
         }
+        totalValue.innerHTML = total * calcmumbai.options[calcmumbai.selectedIndex].value;
     });
 
 
-    place.addEventListener('change', function () {
+    place.addEventListener('change', function calcMumbai() {
         if (restDays.value == '' || persons.value == '') {
             totalValue.innerHTML = 0;
         } else {
