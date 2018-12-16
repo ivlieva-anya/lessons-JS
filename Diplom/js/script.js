@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', function () {
         elem.addEventListener('click', function ({target}) {
             clearAllCalc ();
             elemClosed.style = "display : none";
+            document.body.style.overflow='auto';
         });
     };
 
@@ -22,6 +23,7 @@ window.addEventListener('DOMContentLoaded', function () {
         elem.addEventListener('click', function ({target}) {
             if (!elemClosed.contains(target)) {
                 this.style = "display : none";
+                document.body.style.overflow='auto';
             }
         });
     };
@@ -29,6 +31,7 @@ window.addEventListener('DOMContentLoaded', function () {
     function setOpenPopup(elem, elemOpened) {
         elem.addEventListener('click', (event) => {
             elemOpened.style.display = "flex";
+            document.body.style.overflow='hidden';
             event.preventDefault();
         });
     };
@@ -49,7 +52,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //form
     function phoneNumberVerification(input) {
         input.addEventListener('input', function ({data}) {
-            const str = '0123456789+-)(';
+            const str = '0123456789';
             if (str.indexOf(data, 0) === -1 || this.value.length > 16) {
                 this.value = this.value.substr(0, this.value.length - 1);
             }
@@ -92,15 +95,20 @@ window.addEventListener('DOMContentLoaded', function () {
                 for (let i = 0; i < input.length; i++) {
                     input[i].value = '';
                 }
-                clearAllCalc ();            }
+                if(this.classList.contains('calc_form')){
+                    clearAllCalc (); 
+                } 
+            }
             let clearForm = clearInput.bind(this);
 
             let formData = new FormData(form);
-            for (var key in calcData) {
-                if(key !="name" && key !="phone" && key !='clear'){
-                    formData.append(key, calcData[key]);
+            if(form.classList.contains('calc_form')){
+                for (var key in calcData) {
+                    if(key !="name" && key !="phone" && key !='clear'){
+                        formData.append(key, calcData[key]);
+                    }
                 }
-              }
+            }
             postData(formData)
                 .then(() => statusMessange.innerHTML = messange.success)
                 .catch(() => statusMessange.innerHTML = messange.failur)
@@ -167,7 +175,6 @@ window.addEventListener('DOMContentLoaded', function () {
     const popupCalcBtn = document.querySelectorAll('.popup_calc_btn'),
         popupCalc = document.querySelector('.popup_calc '),
         popupCalcClose = document.querySelector('.popup_calc_close'),
-        popupCalcContent = document.querySelector('.popup_calc_content'),
         balconIcons = document.querySelector('.balcon_icons'),
         bigImg = document.querySelectorAll('.big_img img'),
         imgTab = balconIcons.querySelectorAll('a img'),
@@ -176,11 +183,9 @@ window.addEventListener('DOMContentLoaded', function () {
         popupCalcProfile = document.querySelector('.popup_calc_profile'),
         checkbox = document.querySelectorAll('.checkbox'),
         popupCalcProfileClose = document.querySelector('.popup_calc_profile_close'),
-        popupCalcProfileContent = document.querySelector('.popup_calc_profile_content '),
         popupCalcProfileButton = document.querySelector('.popup_calc_profile_button'),
         popupCalcEnd = document.querySelector('.popup_calc_end '),
         popupCalcEndClose = document.querySelector('.popup_calc_end_close'),
-        popupForm = document.querySelector('.popup_form_end'),
         inputWigth = document.querySelector('#width'),
         inputHeight = document.querySelector('#height'),
         viewType = document.querySelector('#view_type'),
@@ -311,8 +316,7 @@ window.addEventListener('DOMContentLoaded', function () {
             seconds = lowTen(Math.floor((t / 1000) % 60)),
             minutes = lowTen(Math.floor((t / 1000 / 60) % 60)),
             hours = lowTen(Math.floor((t / (1000 * 60 * 60))%24)+offset),
-            days = lowTen(Math.floor((t / (1000 * 60 * 60 * 24))));
-
+            days = lowTen(Math.floor(((t / (1000 * 60 * 60))+offset) / 24));
         return {
             'total': t,
             'days' : days,
@@ -359,9 +363,10 @@ window.addEventListener('DOMContentLoaded', function () {
     function showBigImg(event,item){
         item.addEventListener(event,({target})=>{
             popupFoto.style= "display : flex";
-            let a = target.src.split('/').splice(4,3);
-                b= a.splice(2,0,'big_img')
+            let a =target.src.substr(target.src.indexOf('img/', 0)).split('/'),
+                b= a.splice(2,0,'big_img');
             modalImg.setAttribute('src',a.join('/'))
+            document.body.style.overflow='hidden';
         })
     }
     smalFoto.forEach(item=>{
