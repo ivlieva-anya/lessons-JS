@@ -13,7 +13,10 @@ window.addEventListener('DOMContentLoaded', function () {
     //popup 
     function setClosePopup(elem, elemClosed) {
         elem.addEventListener('click', function ({target}) {
-            clearAllCalc ();
+            if(this.classList.contains('calc_form')){
+                clearAllCalc (); 
+            } 
+
             elemClosed.style = "display : none";
             document.body.style.overflow='auto';
         });
@@ -98,7 +101,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 if(this.classList.contains('calc_form')){
                     clearAllCalc (); 
                 } 
-            }
+                      }
             let clearForm = clearInput.bind(this);
 
             let formData = new FormData(form);
@@ -254,15 +257,26 @@ window.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-    function setOpenClose(button,close,open){
+    function setOpenClose(button,close,open,flag){
         button.addEventListener('click', function (event) {
-            close.style = "display : none";
-            open.style = "display : flex";
+            // const in1 = close.querySelectorAll('input')
+
+            if (flag ===1){
+                if(calcData.width*calcData.height != 0){
+                    close.style = "display : none";
+                    open.style = "display : flex";
+                }
+            }else if (flag ===2){
+                if (calcData.type != 0){
+                    close.style = "display : none";
+                    open.style = "display : flex";
+                }
+            }
         });
     };
 
-    setOpenClose(popupCalcButton,popupCalc,popupCalcProfile);
-    setOpenClose(popupCalcProfileButton,popupCalcProfile,popupCalcEnd);
+    setOpenClose(popupCalcButton,popupCalc,popupCalcProfile,1);
+    setOpenClose(popupCalcProfileButton,popupCalcProfile,popupCalcEnd,2);
 
     checkbox.forEach((item) => {
         item.addEventListener('click', function ({target}) {
